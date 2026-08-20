@@ -1,0 +1,29 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: Create group
+    group:
+      name: "{{ item.name }}"
+      state: "{{ item.state }}"
+    loop:
+    - name: broadway
+      state: present
+
+    - name: docker
+      state: present
+
+  - name: Create user
+    user:
+      name: "{{ item.name }}"
+      state: "{{ item.state }}"
+      groups: "{{ item.groups }}"
+
+    loop:
+    - name: bob
+      state: present
+      groups: docker
+
+    - name: usera
+      state: present
+      groups: broadway

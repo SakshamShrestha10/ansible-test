@@ -1,0 +1,19 @@
+---
+- hosts: all
+  become: true
+  vars:
+  - remote: /backup
+  - perm: 775
+  - local: /home/saksham/ansible
+
+  tasks:
+  - name: Create directory
+    file:
+      path: "{{ remote }}"
+      state: directory
+      mode: "{{ perm }}"
+
+  - name: Copy files
+    copy:
+      src: "{{ local }}"
+      dest: "{{ remote }}"
